@@ -1,0 +1,16 @@
+---
+# Uninstall?
+docker_remove: false
+
+# Package management names
+docker_packages:
+  - docker
+docker_packages_dist: []
+
+# Apt repository configuration
+docker_apt_key_dir: /usr/local/share/apt
+docker_manage_apt_key_dir: true
+docker_apt_key_url: https://download.docker.com/linux/debian/gpg
+docker_apt_key_checksum: sha256:1500c1f56fa9e26b9b8f42452a553675796ade0807cdce11975eb98170b3a570
+docker_apt_arch_map:
+  x86_64: amd64

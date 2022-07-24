@@ -1,0 +1,31 @@
+---
+- name: OS-specific variables
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      paths:
+        - vars
+      files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_lsb.id }}.yml"
+
+- name: OS-specific tasks
+  include_tasks: "{{ lookup('first_found', tasks) }}"
+  vars:
+    tasks:
+      paths:
+        - tasks
+      files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_lsb.id }}.yml"
+
+- name: Install packages
+  package:
+    name: "{{ docker_packages | union(docker_packages_dist) }}"
+    state: "{{ 'absent' if docker_remove else 'present' }}"
