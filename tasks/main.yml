@@ -26,6 +26,6 @@
         - "{{ ansible_lsb.id }}.yml"
 
 - name: Install packages
-  package:
+  ansible.builtin.package:
     name: "{{ docker_packages | union(docker_packages_dist) }}"
     state: "{{ 'absent' if docker_remove else 'present' }}"

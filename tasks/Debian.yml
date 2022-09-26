@@ -1,12 +1,12 @@
 ---
 - name: Install apt HTTPS transport
-  package:
+  ansible.builtin.package:
     name:
       - apt-transport-https
     state: present
 
 - name: Create apt key directory
-  file:
+  ansible.builtin.file:
     path: "{{ docker_apt_key_dir }}"
     state: directory
     owner: root
@@ -25,7 +25,7 @@
   when: not docker_remove
 
 - name: Add apt repositories
-  template:
+  ansible.builtin.template:
     src: docker.list.j2
     dest: /etc/apt/sources.list.d/docker.list
     owner: root
