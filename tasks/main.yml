@@ -35,3 +35,4 @@
     name: docker
     enabled: yes
     state: started
+  ignore_errors: "{{ ansible_check_mode }}"
