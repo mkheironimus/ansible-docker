@@ -29,3 +29,9 @@
   ansible.builtin.package:
     name: "{{ docker_packages | union(docker_packages_dist) }}"
     state: "{{ 'absent' if docker_remove else 'present' }}"
+
+- name: Enable docker
+  ansible.builtin.service:
+    name: docker
+    enabled: yes
+    state: started
