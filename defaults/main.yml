@@ -3,8 +3,7 @@
 docker_remove: false
 
 # Package management names
-docker_packages:
-  - docker
+docker_packages: []
 docker_packages_dist: []
 
 # Apt repository configuration
