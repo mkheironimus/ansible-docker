@@ -36,3 +36,22 @@
     enabled: yes
     state: started
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Install scripts
+  ansible.builtin.copy:
+    src: cleanup_dangling.sh
+    dest: /etc/docker/cleanup_dangling.sh
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Schedule image cleanup
+  ansible.builtin.cron:
+    name: cleanup_dangling
+    minute: "37"
+    hour: "{{ docker_cleanup_time | default('0', true) }}"
+    weekday: "{{ docker_cleanup_day | default(omit) }}"
+    user: root
+    job: /etc/docker/cleanup_dangling.sh
+    cron_file: ansible_docker
+    state: "{{ 'present' if docker_cleanup_time != '' else 'absent' }}"
